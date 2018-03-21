@@ -21,7 +21,10 @@ app.use(cors(), bodyParser.json(), expressJwt({
   credentialsRequired: false
 }));
 
-app.use('/graphql', graphqlExpress({schema}));
+app.use('/graphql', graphqlExpress((req) => ({
+  schema,
+  context: {user: req.user}
+})));
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 
 app.post('/login', (req, res) => {
