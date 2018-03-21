@@ -23,7 +23,7 @@ app.use(cors(), bodyParser.json(), expressJwt({
 
 app.use('/graphql', graphqlExpress((req) => ({
   schema,
-  context: {user: req.user}
+  context: {user: req.user && db.users.get(req.user.sub)}
 })));
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 
